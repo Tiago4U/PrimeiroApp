@@ -1,117 +1,74 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
 
-import React from 'react';
-import type {Node} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { Alert, Button, StyleSheet, Text, View, TextInput } from 'react-native';
+import { useEffect, useState } from 'react';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
 
-/* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
- * LTI update could not be added via codemod */
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+
+export default function App() {
+
+  const [nome, setNome ] = useState('');
+  const [password, setPassword] = useState('');
+  const [botao, setBotao] = useState(true);
+
+  useEffect(()=>{
+      setNome('admin')
+      alert("Ola "+nome)
+  },[])
+
+  useEffect(()=>{
+    if(password !== ''){
+      setBotao(false)
+    }else{
+      setBotao(true)
+    }
+    
+},[password])
+
+function validaCampos(){
+  if (nome == '' || password == ''){
+    alert('Preencha todos os campos')
+  }
+  else{
+    alert('OK')
+  }
+}
+
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
+    <View style={styles.container}>
+      
+      
+      <Button
+        onPress={() => Alert.alert('clicou')}
+        title="Clique"
+        color="#841584"
+        accessibilityLabel="Learn more about this purple button"/>
+      <TextInput style={styles.input}value={nome} placeholder='usuario' onChangeText={setNome}/>
+      <TextInput style={styles.input}value={password} placeholder='senha' onChangeText={setPassword} secureTextEntry/>
+      <Text style={styles.texto}>Sejaaa bem vindo {nome} </Text>
+
+
+      <Button title='Entrar' onPress={validaCampos} color='blue' disabled={botao}/>
+
     </View>
   );
-};
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="Seesds Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+}
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  texto: {
+    fontSize: 20,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+  input: {
+    borderColor: '#555',
+    borderWidth: 2,
+    width: 240,
+    margin: 20,
+    padding: 10,
 
-export default App;
+  }
+});
